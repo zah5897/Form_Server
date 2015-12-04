@@ -3,11 +3,15 @@ package com.haoqi.webapp.forly.bean;
 import java.util.Calendar;
 import java.util.Date;
 
+import javax.persistence.CascadeType;
 import javax.persistence.Column;
 import javax.persistence.Entity;
+import javax.persistence.FetchType;
 import javax.persistence.GeneratedValue;
 import javax.persistence.GenerationType;
 import javax.persistence.Id;
+import javax.persistence.JoinColumn;
+import javax.persistence.ManyToOne;
 import javax.persistence.Table;
 import javax.persistence.Temporal;
 import javax.persistence.TemporalType;
@@ -19,8 +23,10 @@ public class Funny {
 	@GeneratedValue(strategy = GenerationType.IDENTITY)
 	private long id;
 
-	@Column
-	private long publisherId; // 发布者id
+	@ManyToOne(targetEntity = User.class)
+	// @Column(nullable=true)
+	@JoinColumn(name = "uid", updatable = false, insertable = false, nullable = true)
+	private User publisher; // 发布者
 
 	@Temporal(TemporalType.TIMESTAMP)
 	private Date publishTime = getDefault();
@@ -46,14 +52,6 @@ public class Funny {
 
 	public void setId(long id) {
 		this.id = id;
-	}
-
-	public long getPublisherId() {
-		return publisherId;
-	}
-
-	public void setPublisherId(long publisherId) {
-		this.publisherId = publisherId;
 	}
 
 	public Date getPublishTime() {
@@ -96,6 +94,12 @@ public class Funny {
 		this.storeCount = storeCount;
 	}
 
- 
+	public User getPublisher() {
+		return publisher;
+	}
+
+	public void setPublisher(User publisher) {
+		this.publisher = publisher;
+	}
 
 }

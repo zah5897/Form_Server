@@ -20,6 +20,14 @@ import com.fasterxml.jackson.annotation.JsonFormat;
 @Entity
 @Table(name = "t_user", uniqueConstraints = { @UniqueConstraint(columnNames = { "mobile" }) })
 public class User {
+
+	public User(long id) {
+		this.id = id;
+	}
+
+	public User() {
+	}
+
 	@Id
 	@GeneratedValue(strategy = GenerationType.IDENTITY)
 	private long id;

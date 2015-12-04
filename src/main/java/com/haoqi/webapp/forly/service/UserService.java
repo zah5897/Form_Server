@@ -27,9 +27,14 @@ public class UserService {
 		return userDao.findUserByMobile(mobile);
 	}
 
+	@Transactional
+	public void delete(long id) {
+		userDao.delete(id);
+	}
+
 	@Transactional(value = TxType.REQUIRED)
 	public long insertUser(User user) {
-		return (Long) userDao.insertUser(user);
+		return (Long) userDao.insert(user);
 	}
 
 	@Transactional

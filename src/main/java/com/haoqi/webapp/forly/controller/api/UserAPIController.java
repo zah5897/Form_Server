@@ -32,6 +32,8 @@ public class UserAPIController extends BaseController {
 	@Resource
 	private UserService userService;
 
+	
+
 	@RequestMapping("info")
 	public Map<String, Object> info(long id, HttpServletRequest request) {
 		User user = userService.getUser(id);
