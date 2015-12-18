@@ -3,17 +3,7 @@ package com.haoqi.webapp.forly.dao;
 import java.io.Serializable;
 import java.util.List;
 
-import javax.annotation.Resource;
-
-import org.hibernate.Query;
-import org.hibernate.Session;
-import org.hibernate.SessionFactory;
-import org.hibernate.exception.ConstraintViolationException;
 import org.springframework.stereotype.Repository;
-
-import com.haoqi.webapp.forly.bean.User;
-import com.haoqi.webapp.forly.exception.AppException;
-import com.haoqi.webapp.forly.exception.ERROR;
 
 @Repository("funnyDao")
 public class FunnyDao extends BaseDao {

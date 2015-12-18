@@ -40,7 +40,7 @@ public class UserDao extends BaseDao {
 	@Override
 	public Serializable insert(Object obj) {
 		User user = (User) obj;
-		String hql = "from User user where user.mobile=?";
+		String hql = "from User user where user.name=?";
 		Query query = getCurrentSession().createQuery(hql);
 		query.setString(0, user.getMobile());
 		List<?> result = query.list();

@@ -23,6 +23,7 @@ import com.haoqi.webapp.forly.exception.ERROR;
 import com.haoqi.webapp.forly.service.UserService;
 import com.haoqi.webapp.forly.util.FileUtils;
 import com.haoqi.webapp.forly.util.HeaderUtil;
+import com.haoqi.webapp.forly.util.MD5Util;
 import com.haoqi.webapp.forly.util.TextUtils;
 
 @RestController
@@ -31,8 +32,6 @@ public class UserAPIController extends BaseController {
 
 	@Resource
 	private UserService userService;
-
-	
 
 	@RequestMapping("info")
 	public Map<String, Object> info(long id, HttpServletRequest request) {
@@ -62,39 +61,67 @@ public class UserAPIController extends BaseController {
 	}
 
 	@RequestMapping("regist")
-	public Map<String, Object> regist(@RequestParam MultipartFile file, HttpServletRequest request, User user) {
+	public Map<String, Object> regist(HttpServletRequest request) {
 
-		// 手机号码不能为空
-		if (TextUtils.isEmpty(user.getMobile())) {
-			return HeaderUtil.getResultMap(ERROR.ERR_PARAM.setNewText("手机号码为空"));
+		String email = request.getParameter("mail");
+		String password = request.getParameter("password");
+
+		if (TextUtils.isEmpty(email)) {
+			return HeaderUtil.getResultMap(ERROR.ERR_PARAM.setNewText("邮箱不能为空!"));
 		}
-
-		// 判断是否已经注册
-		User serverUser = userService.findUserByMobile(user.getMobile());
-		if (serverUser != null) {
+		if (TextUtils.isEmpty(password)) {
+			return HeaderUtil.getResultMap(ERROR.ERR_PARAM.setNewText("密码不能为空!"));
+		}
+		User user = new User();
+		user.setName(email);
+		user.setMail(email);
+		user.setPassword(MD5Util.getMd5(password));
+		long id = userService.insertUser(user);
+		if (id == -1) {
 			return HeaderUtil.getResultMap(ERROR.ERR_USER_EXIST);
 		}
-		// 开始上传图片
-		String shortPath = null;
-		if (file != null && !file.isEmpty()) {
-			try {
-				shortPath = FileUtils.saveFileReturnShorePath(file, request.getServletContext());
-				if (shortPath != null) {
-				} else {
-					return HeaderUtil.getResultMap(ERROR.ERR_FILE_UPLOAD);
-				}
-			} catch (Exception e) {
-				e.printStackTrace();
-				return HeaderUtil.getResultMap(ERROR.ERR_FILE_UPLOAD);
-			}
-		}
-		if (shortPath != null) {
-			user.setAvatar(shortPath);
-		}
-		long id = userService.insertUser(user);
-		user.setId(id);
 		Map<String, Object> result = HeaderUtil.getResultOKMap();
+		user.setId(id);
 		result.put("user", user);
 		return result;
 	}
+
+	// @RequestMapping("regist")
+	// public Map<String, Object> regist(@RequestParam MultipartFile file,
+	// HttpServletRequest request, User user) {
+	//
+	// // 手机号码不能为空
+	// if (TextUtils.isEmpty(user.getMobile())) {
+	// return HeaderUtil.getResultMap(ERROR.ERR_PARAM.setNewText("手机号码为空"));
+	// }
+	//
+	// // 判断是否已经注册
+	// User serverUser = userService.findUserByMobile(user.getMobile());
+	// if (serverUser != null) {
+	// return HeaderUtil.getResultMap(ERROR.ERR_USER_EXIST);
+	// }
+	// // 开始上传图片
+	// String shortPath = null;
+	// if (file != null && !file.isEmpty()) {
+	// try {
+	// shortPath = FileUtils.saveFileReturnShorePath(file,
+	// request.getServletContext());
+	// if (shortPath != null) {
+	// } else {
+	// return HeaderUtil.getResultMap(ERROR.ERR_FILE_UPLOAD);
+	// }
+	// } catch (Exception e) {
+	// e.printStackTrace();
+	// return HeaderUtil.getResultMap(ERROR.ERR_FILE_UPLOAD);
+	// }
+	// }
+	// if (shortPath != null) {
+	// user.setAvatar(shortPath);
+	// }
+	// long id = userService.insertUser(user);
+	// user.setId(id);
+	// Map<String, Object> result = HeaderUtil.getResultOKMap();
+	// result.put("user", user);
+	// return result;
+	// }
 }

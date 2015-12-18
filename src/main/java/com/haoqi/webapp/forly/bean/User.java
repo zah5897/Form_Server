@@ -35,6 +35,8 @@ public class User {
 	@Column(length = 32)
 	private String name;
 	@Column(length = 32)
+	private String password;
+	@Column(length = 32)
 	private String nickName;
 	@Column
 	private short age;
@@ -97,6 +99,14 @@ public class User {
 
 	public void setName(String name) {
 		this.name = name;
+	}
+
+	public String getPassword() {
+		return password;
+	}
+
+	public void setPassword(String password) {
+		this.password = password;
 	}
 
 	public String getNickName() {
