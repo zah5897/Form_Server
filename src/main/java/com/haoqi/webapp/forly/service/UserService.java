@@ -41,4 +41,9 @@ public class UserService {
 	public List<?> getList() {
 		return userDao.getList();
 	}
+
+	@Transactional(value = TxType.REQUIRED)
+	public void update(User user) {
+		userDao.update(user);
+	}
 }

@@ -21,6 +21,10 @@ public class UserDao extends BaseDao {
 		return (User) getCurrentSession().get(User.class, id);
 	}
 
+	public void update(User user) {
+		getCurrentSession().update(user);
+	}
+
 	public List<?> getList() {
 		return getCurrentSession().createQuery("from User").list();
 	}
@@ -42,7 +46,7 @@ public class UserDao extends BaseDao {
 		User user = (User) obj;
 		String hql = "from User user where user.name=?";
 		Query query = getCurrentSession().createQuery(hql);
-		query.setString(0, user.getMobile());
+		query.setString(0, user.getName());
 		List<?> result = query.list();
 		if (result == null || result.size() == 0) {
 			return getCurrentSession().save(user);

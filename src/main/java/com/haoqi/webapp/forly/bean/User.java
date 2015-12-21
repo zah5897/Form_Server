@@ -16,6 +16,7 @@ import javax.persistence.UniqueConstraint;
 import org.springframework.format.annotation.DateTimeFormat;
 
 import com.fasterxml.jackson.annotation.JsonFormat;
+import com.fasterxml.jackson.annotation.JsonIgnore;
 
 @Entity
 @Table(name = "t_user", uniqueConstraints = { @UniqueConstraint(columnNames = { "mobile" }) })
@@ -35,11 +36,14 @@ public class User {
 	@Column(length = 32)
 	private String name;
 	@Column(length = 32)
+	@JsonIgnore
 	private String password;
 	@Column(length = 32)
 	private String nickName;
 	@Column
 	private short age;
+	@Column
+	private short sex; // 0 男 1 女
 	@Column
 	@Temporal(TemporalType.TIMESTAMP)
 	private Date birthday = getDefault();
@@ -47,6 +51,7 @@ public class User {
 	@Column
 	private String avatar;
 	@Column
+	@JsonIgnore
 	private String mobile;
 	@Column
 	private String imsi;
@@ -63,6 +68,7 @@ public class User {
 
 	// extro
 	@Column
+	@JsonIgnore
 	private String tel;
 	@Column
 	private String fax;
@@ -75,8 +81,10 @@ public class User {
 	@Column
 	private String website;
 	@Column
+	@JsonIgnore
 	private String lat;
 	@Column
+	@JsonIgnore
 	private String lng;
 
 	private Date getDefault() {
@@ -111,6 +119,14 @@ public class User {
 
 	public String getNickName() {
 		return nickName;
+	}
+
+	public short getSex() {
+		return sex;
+	}
+
+	public void setSex(short sex) {
+		this.sex = sex;
 	}
 
 	public void setNickName(String nickName) {

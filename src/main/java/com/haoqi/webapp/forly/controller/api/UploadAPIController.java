@@ -42,8 +42,7 @@ public class UploadAPIController {
 	 */
 	@RequestMapping("/upload")
 	@ResponseBody
-	public Map<String, Object> upload(DefaultMultipartHttpServletRequest multipartRequest, HttpSession session,
-			User user) {
+	public Map<String, Object> upload(DefaultMultipartHttpServletRequest multipartRequest, User user) {
 		log.info("注册手机号码:" + user.getMobile());
 		if (multipartRequest != null) {
 			Iterator<String> iterator = multipartRequest.getFileNames();
@@ -51,7 +50,7 @@ public class UploadAPIController {
 				MultipartFile file = multipartRequest.getFile((String) iterator.next());
 				if (!file.isEmpty()) {
 					try {
-						FileUtils.saveFile(file, session.getServletContext());
+						FileUtils.saveFile(file, multipartRequest.getServletContext());
 					} catch (Exception e) {
 						e.printStackTrace();
 						log.error(e.getMessage());

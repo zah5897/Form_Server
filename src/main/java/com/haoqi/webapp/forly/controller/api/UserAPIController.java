@@ -3,6 +3,7 @@ package com.haoqi.webapp.forly.controller.api;
 import java.io.File;
 import java.io.IOException;
 import java.text.SimpleDateFormat;
+import java.util.Iterator;
 import java.util.List;
 import java.util.Map;
 import java.util.UUID;
@@ -10,14 +11,17 @@ import java.util.UUID;
 import javax.annotation.Resource;
 import javax.servlet.http.HttpServletRequest;
 
+import org.apache.log4j.Logger;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.bind.annotation.RestController;
 import org.springframework.web.multipart.MultipartFile;
 import org.springframework.web.multipart.MultipartHttpServletRequest;
+import org.springframework.web.multipart.support.DefaultMultipartHttpServletRequest;
 
 import com.haoqi.webapp.forly.bean.User;
 import com.haoqi.webapp.forly.controller.BaseController;
+import com.haoqi.webapp.forly.dao.UserDao;
 import com.haoqi.webapp.forly.exception.AppException;
 import com.haoqi.webapp.forly.exception.ERROR;
 import com.haoqi.webapp.forly.service.UserService;
@@ -29,7 +33,7 @@ import com.haoqi.webapp.forly.util.TextUtils;
 @RestController
 @RequestMapping("/api/user")
 public class UserAPIController extends BaseController {
-
+	private static Logger log = Logger.getLogger(UserAPIController.class);
 	@Resource
 	private UserService userService;
 
@@ -82,6 +86,55 @@ public class UserAPIController extends BaseController {
 		}
 		Map<String, Object> result = HeaderUtil.getResultOKMap();
 		user.setId(id);
+		result.put("user", user);
+		return result;
+	}
+
+	@RequestMapping("modify")
+	public Map<String, Object> modify(DefaultMultipartHttpServletRequest multipartRequest) {
+
+		String id = multipartRequest.getParameter("userId");
+		long userId;
+		try {
+			userId = Long.parseLong(id);
+		} catch (NumberFormatException e) {
+			return HeaderUtil.getResultMap(ERROR.ERR_PARAM);
+		}
+
+		User user = userService.getUser(userId);
+		if (user == null) {
+			return HeaderUtil.getResultMap(ERROR.ERR_USER_NOT_EXIST);
+		}
+
+		String nickName = multipartRequest.getParameter("nickName");
+		String info = multipartRequest.getParameter("info");
+		String sex = multipartRequest.getParameter("sex");
+
+		String iconPath = null;
+		Iterator<String> iterator = multipartRequest.getFileNames();
+		while (iterator.hasNext()) {
+			MultipartFile file = multipartRequest.getFile((String) iterator.next());
+			if (!file.isEmpty()) {
+				try {
+					iconPath = FileUtils.saveFile(file, multipartRequest.getServletContext()).getAbsolutePath();
+				} catch (Exception e) {
+					e.printStackTrace();
+					log.error(e.getMessage());
+				}
+			}
+		}
+
+		user.setNickName(nickName);
+		user.setInfo(info);
+		user.setAvatar(iconPath);
+		try {
+			short s = Short.parseShort(sex);
+			user.setSex(s);
+		} catch (NumberFormatException e) {
+			user.setSex((short) 0);
+		}
+		userService.update(user);
+		Map<String, Object> result = HeaderUtil.getResultOKMap();
 		result.put("user", user);
 		return result;
 	}
