@@ -1,50 +1,19 @@
 package com.haoqi.webapp.forly.bean;
 
-import java.util.Calendar;
 import java.util.Date;
 
-import javax.persistence.CascadeType;
-import javax.persistence.Column;
-import javax.persistence.Entity;
-import javax.persistence.FetchType;
-import javax.persistence.GeneratedValue;
-import javax.persistence.GenerationType;
-import javax.persistence.Id;
-import javax.persistence.JoinColumn;
-import javax.persistence.ManyToOne;
-import javax.persistence.Table;
-import javax.persistence.Temporal;
-import javax.persistence.TemporalType;
-
-@Entity
-@Table(name = "t_funny")
-public class Funny {
-	@Id
-	@GeneratedValue(strategy = GenerationType.IDENTITY)
+//@Table(name = "t_funny")
+public class Funny{
 	private long id;
+	private long publisher_id; // 发布者
 
-	@ManyToOne(targetEntity = User.class)
-	// @Column(nullable=true)
-	@JoinColumn(name = "uid", updatable = false, insertable = false, nullable = true)
-	private User publisher; // 发布者
+	private Date publishTime; // 发布时间
 
-	@Temporal(TemporalType.TIMESTAMP)
-	private Date publishTime = getDefault();
-
-	@Column
-	private String title; // 標題
-	@Column
+	private String title; // 标题
 	private String content; // 内容
-	@Column
-	private int praiseCount; // 被赞次数
-	@Column
-	private int storeCount; // 被收藏次数
-
-	private Date getDefault() {
-		Calendar c = Calendar.getInstance();
-		c.set(1980, 1, 1, 0, 0);
-		return c.getTime();
-	}
+	private int praise_count; // 被赞次数
+	private int store_count; // 被收藏次数
+	private int category_type; // 类型
 
 	public long getId() {
 		return id;
@@ -52,6 +21,14 @@ public class Funny {
 
 	public void setId(long id) {
 		this.id = id;
+	}
+
+	public long getPublisher_id() {
+		return publisher_id;
+	}
+
+	public void setPublisher_id(long publisher_id) {
+		this.publisher_id = publisher_id;
 	}
 
 	public Date getPublishTime() {
@@ -78,28 +55,28 @@ public class Funny {
 		this.content = content;
 	}
 
-	public int getPraiseCount() {
-		return praiseCount;
+	public int getPraise_count() {
+		return praise_count;
 	}
 
-	public void setPraiseCount(int praiseCount) {
-		this.praiseCount = praiseCount;
+	public void setPraise_count(int praise_count) {
+		this.praise_count = praise_count;
 	}
 
-	public int getStoreCount() {
-		return storeCount;
+	public int getStore_count() {
+		return store_count;
 	}
 
-	public void setStoreCount(int storeCount) {
-		this.storeCount = storeCount;
+	public void setStore_count(int store_count) {
+		this.store_count = store_count;
 	}
 
-	public User getPublisher() {
-		return publisher;
+	public int getCategory_type() {
+		return category_type;
 	}
 
-	public void setPublisher(User publisher) {
-		this.publisher = publisher;
+	public void setCategory_type(int category_type) {
+		this.category_type = category_type;
 	}
 
 }

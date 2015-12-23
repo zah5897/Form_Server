@@ -64,6 +64,22 @@ public class UserAPIController extends BaseController {
 		return result;
 	}
 
+	@RequestMapping("login")
+	public Map<String, Object> login(String mail, String password) {
+		User user = userService.findUserByName(mail);
+		if (user == null) {
+			return HeaderUtil.getResultMap(ERROR.ERR_USER_NOT_EXIST);
+		}
+		String md5 = MD5Util.getMd5(password);
+		if (md5.equals(user.getPassword())) {
+			Map<String, Object> result = HeaderUtil.getResultOKMap();
+			result.put("user", user);
+			return result;
+		} else {
+			return HeaderUtil.getResultMap(ERROR.ERR_PASSWORD);
+		}
+	}
+
 	@RequestMapping("regist")
 	public Map<String, Object> regist(HttpServletRequest request) {
 
@@ -116,7 +132,7 @@ public class UserAPIController extends BaseController {
 			MultipartFile file = multipartRequest.getFile((String) iterator.next());
 			if (!file.isEmpty()) {
 				try {
-					iconPath = FileUtils.saveFile(file, multipartRequest.getServletContext()).getAbsolutePath();
+					iconPath = FileUtils.saveFile(file, multipartRequest.getServletContext());
 				} catch (Exception e) {
 					e.printStackTrace();
 					log.error(e.getMessage());
@@ -124,7 +140,7 @@ public class UserAPIController extends BaseController {
 			}
 		}
 
-		user.setNickName(nickName);
+		user.setNick_name(nickName);
 		user.setInfo(info);
 		user.setAvatar(iconPath);
 		try {

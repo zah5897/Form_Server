@@ -14,6 +14,11 @@
 			href="<%=basePath%>manager/user/toAdd">添加用户</a>
 	</fieldset>
 
+<fieldset style="width: 200px">
+		<legend>Category操作</legend>
+		<a href="<%=basePath%>manager/category/toAdd">添加Category</a>
+	</fieldset>
+
 
 	<fieldset style="width: 200px">
 		<legend>段子操作</legend>

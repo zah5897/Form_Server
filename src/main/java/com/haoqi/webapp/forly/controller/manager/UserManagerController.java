@@ -10,7 +10,6 @@ import org.springframework.stereotype.Controller;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.servlet.ModelAndView;
 
-import com.alibaba.druid.support.logging.Log;
 import com.haoqi.webapp.forly.bean.User;
 import com.haoqi.webapp.forly.controller.BaseController;
 import com.haoqi.webapp.forly.service.UserService;

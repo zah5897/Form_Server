@@ -9,13 +9,13 @@ import javax.servlet.ServletContext;
 import org.springframework.web.multipart.MultipartFile;
 
 public class FileUtils {
-	public static final String FILE_ROOT = "uploadfiles";
+	public static final String FILE_ROOT = "upload_images";
 
 	public static String getServerFilePath(ServletContext servletContext) {
 		return servletContext.getRealPath("/") + File.separator + FILE_ROOT + File.separator;
 	}
 
-	public static File saveFile(MultipartFile file, ServletContext servletContext)
+	public static String saveFile(MultipartFile file, ServletContext servletContext)
 			throws IllegalStateException, IOException {
 		// System.out.println(file.getContentType());// 获取文件MIME类型
 		// System.out.println(file.getName());// 获取表单中文件组件的名字
@@ -27,14 +27,14 @@ public class FileUtils {
 		if (!TextUtils.isEmpty(shortName)) {
 			String fileShortName = null;
 			if (shortName.contains(".")) {
-				fileShortName = UUID.randomUUID() +"."+ shortName.split("\\.")[1];
+				fileShortName = UUID.randomUUID() + "." + shortName.split("\\.")[1];
 			} else {
 				fileShortName = UUID.randomUUID().toString();
 			}
 			File uploadFile = new File(filePath + fileShortName);
 			uploadFile.mkdirs();
 			file.transferTo(uploadFile);// 保存到一个目标文件中。
-			return uploadFile;
+			return fileShortName;
 		}
 		return null;
 	}
@@ -52,7 +52,7 @@ public class FileUtils {
 			String fileShortName = null;
 			if (shortName.contains(".")) {
 				String splitName[] = shortName.split("\\.");
-				fileShortName = UUID.randomUUID()+"." + splitName[1];
+				fileShortName = UUID.randomUUID() + "." + splitName[1];
 			} else {
 				fileShortName = UUID.randomUUID().toString();
 			}
@@ -64,10 +64,10 @@ public class FileUtils {
 		return null;
 	}
 
-//	public static void main(String[] args) {
-//		String name = "12.png";
-//		String names[]=name.split("\\.");
-//		System.out.println(names.length);
-//	}
+	// public static void main(String[] args) {
+	// String name = "12.png";
+	// String names[]=name.split("\\.");
+	// System.out.println(names.length);
+	// }
 
 }

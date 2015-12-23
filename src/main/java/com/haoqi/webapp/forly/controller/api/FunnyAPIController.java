@@ -1,6 +1,5 @@
 package com.haoqi.webapp.forly.controller.api;
 
-import java.util.List;
 import java.util.Map;
 
 import javax.annotation.Resource;
@@ -22,12 +21,12 @@ public class FunnyAPIController extends BaseController {
 
 	@RequestMapping("list")
 	public Map<String, Object> list(int pageNum, int pageSize) {
-		List<?> list = funnyService.getList(pageNum, pageSize);
-		Map<String, Object> result = HeaderUtil.getResultOKMap();
-		result.put("rows", list);
-		result.put("pageNum", pageNum);
-		result.put("pageSize", pageSize);
-		return result;
+		// List<?> list = funnyService.getList(pageNum, pageSize);
+		// Map<String, Object> result = HeaderUtil.getResultOKMap();
+		// result.put("rows", list);
+		// result.put("pageNum", pageNum);
+		// result.put("pageSize", pageSize);
+		return null;
 	}
 
 	@RequestMapping("add")

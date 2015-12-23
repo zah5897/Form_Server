@@ -7,9 +7,9 @@ import org.springframework.stereotype.Controller;
 import org.springframework.web.bind.annotation.RequestMapping;
 
 import com.haoqi.webapp.forly.bean.Funny;
-import com.haoqi.webapp.forly.bean.User;
 import com.haoqi.webapp.forly.controller.BaseController;
 import com.haoqi.webapp.forly.service.FunnyService;
+import com.haoqi.webapp.forly.util.TextUtils;
 
 @Controller
 @RequestMapping("/manager/funny")
@@ -25,8 +25,13 @@ public class FunnyManagerController extends BaseController {
 
 	@RequestMapping("add")
 	public String add(Funny funny, HttpServletRequest request) {
-		funny.setPublisher(new User(1));
-		long id = funnyService.insert(funny);
+		String publisher_id = request.getParameter("user_id");
+		if (TextUtils.isEmpty(publisher_id)) {
+			long pId = Long.parseLong(publisher_id);
+			funny.setPublisher_id(pId);
+			long id = funnyService.insert(funny);
+		}
 		return "funny/add";
+
 	}
 }

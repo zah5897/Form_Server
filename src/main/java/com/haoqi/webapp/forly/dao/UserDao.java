@@ -3,60 +3,78 @@ package com.haoqi.webapp.forly.dao;
 import java.io.Serializable;
 import java.util.List;
 
-import org.hibernate.Query;
+import javax.annotation.Resource;
+
+import org.springframework.jdbc.core.BeanPropertyRowMapper;
+import org.springframework.jdbc.core.JdbcTemplate;
 import org.springframework.stereotype.Repository;
 
 import com.haoqi.webapp.forly.bean.User;
 
+@SuppressWarnings("unchecked")
 @Repository("userDao")
 public class UserDao extends BaseDao {
-	// @Resource
-	// private SessionFactory sessionFactory;
-	//
-	// private Session getCurrentSession() {
-	// return sessionFactory.getCurrentSession();
-	// }
+	@Resource
+	private JdbcTemplate jdbcTemplate;
 
 	public User getUser(long id) {
-		return (User) getCurrentSession().get(User.class, id);
+		@SuppressWarnings("rawtypes")
+		List<User> list = jdbcTemplate.query("select *from t_user user where user.id=?", new Object[] { id },
+				new BeanPropertyRowMapper(User.class));
+		if (list != null) {
+			return list.get(0);
+		} else {
+			return null;
+		}
+
 	}
 
 	public void update(User user) {
-		getCurrentSession().update(user);
+		jdbcTemplate.update("update t_user set nick_name=?,info=?,sex=?,avatar=? where id=?",
+				new Object[] { user.getNick_name(), user.getInfo(), user.getSex(), user.getAvatar(), user.getId() });
 	}
 
 	public List<?> getList() {
-		return getCurrentSession().createQuery("from User").list();
+		@SuppressWarnings("rawtypes")
+		List<User> list = jdbcTemplate.query("select *from t_user user", new BeanPropertyRowMapper(User.class));
+		return list;
 	}
 
 	public User findUserByMobile(String mobile) {
-		String hql = "from User user where user.mobile=?";
-		Query query = getCurrentSession().createQuery(hql);
-		query.setString(0, mobile);
-		List<?> result = query.list();
-		if (result == null || result.size() == 0) {
-			return null;
+		@SuppressWarnings("rawtypes")
+		List<User> list = jdbcTemplate.query("select *from t_user user where user.mobile=?", new Object[] { mobile },
+				new BeanPropertyRowMapper(User.class));
+		if (list != null) {
+			return list.get(0);
 		} else {
-			return (User) result.get(0);
+			return null;
 		}
+
 	}
 
-	@Override
-	public Serializable insert(Object obj) {
-		User user = (User) obj;
-		String hql = "from User user where user.name=?";
-		Query query = getCurrentSession().createQuery(hql);
-		query.setString(0, user.getName());
-		List<?> result = query.list();
-		if (result == null || result.size() == 0) {
-			return getCurrentSession().save(user);
+	@SuppressWarnings("rawtypes")
+	public User findUserByName(String name) {
+		List<User> list = jdbcTemplate.query("select *from t_user user where user.name=?", new Object[] { name },
+				new BeanPropertyRowMapper(User.class));
+		if (list != null) {
+			return list.get(0);
 		} else {
-			return new Long(-1L);
+			return null;
 		}
+
+	}
+
+	public int getCountByName(String name) {
+		int count = jdbcTemplate.queryForObject("select count(*) from t_user user where user.name=?",
+				new String[] { name }, Integer.class);
+		return count;
+	}
+
+	public Serializable insert(User user) {
+		return saveObj(jdbcTemplate, "t_user", user);
 	}
 
 	public void delete(long id) {
-
-		getCurrentSession().delete(new User(id));
+		jdbcTemplate.update("delete from t_user where id=?", new Object[] { id });
 	}
 }
