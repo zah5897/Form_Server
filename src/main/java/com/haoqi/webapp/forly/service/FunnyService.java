@@ -1,5 +1,7 @@
 package com.haoqi.webapp.forly.service;
 
+import java.util.List;
+
 import javax.annotation.Resource;
 
 import org.springframework.stereotype.Service;
@@ -16,6 +18,10 @@ public class FunnyService {
 
 	public long insert(Funny funny) {
 		return (Long) funnyDao.insert(funny);
+	}
+
+	public List<Funny> list(long lastID, int pageSize) {
+		return funnyDao.list(lastID, pageSize);
 	}
 
 	public long spiderInsert(Funny funny) {

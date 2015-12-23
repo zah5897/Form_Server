@@ -20,13 +20,9 @@ public class FunnyAPIController extends BaseController {
 	private FunnyService funnyService;
 
 	@RequestMapping("list")
-	public Map<String, Object> list(int pageNum, int pageSize) {
-		// List<?> list = funnyService.getList(pageNum, pageSize);
-		// Map<String, Object> result = HeaderUtil.getResultOKMap();
-		// result.put("rows", list);
-		// result.put("pageNum", pageNum);
-		// result.put("pageSize", pageSize);
-		return null;
+	public Map<String, Object> list(long lastID, int pageSize) {
+		funnyService.list(lastID, pageSize);
+		return HeaderUtil.getResultOKMap();
 	}
 
 	@RequestMapping("add")

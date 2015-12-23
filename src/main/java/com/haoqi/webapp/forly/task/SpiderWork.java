@@ -7,7 +7,6 @@ import java.io.UnsupportedEncodingException;
 import java.net.MalformedURLException;
 import java.net.URL;
 import java.net.URLConnection;
-import java.util.Date;
 
 import javax.annotation.Resource;
 
@@ -15,6 +14,7 @@ import org.json.JSONArray;
 import org.json.JSONObject;
 
 import com.haoqi.webapp.forly.bean.Category;
+import com.haoqi.webapp.forly.bean.DateTime;
 import com.haoqi.webapp.forly.bean.Funny;
 import com.haoqi.webapp.forly.bean.User;
 import com.haoqi.webapp.forly.service.FunnyService;
@@ -29,7 +29,7 @@ public class SpiderWork {
 	public void work() {
 		System.out.println("----------------------");
 
-		//handler();
+		handler();
 	}
 
 	private void handler() {
@@ -61,8 +61,8 @@ public class SpiderWork {
 					Funny f = new Funny();
 					f.setContent(content);
 					f.setTitle(content);
-					f.setPublishTime(new Date(create_time * 1000));
-					f.setPublisher_id(1);
+					f.setPublisher(new User(2l));
+					f.setPublish_time(new DateTime(create_time * 1000));
 					f.setCategory_type(Category.FUNNY.getValue());
 					long id = funnyService.insert(f);
 					if (id > 0) {

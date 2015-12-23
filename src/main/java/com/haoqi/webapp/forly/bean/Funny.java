@@ -1,14 +1,10 @@
 package com.haoqi.webapp.forly.bean;
 
-import java.util.Date;
-
 //@Table(name = "t_funny")
 public class Funny{
 	private long id;
-	private long publisher_id; // 发布者
-
-	private Date publishTime; // 发布时间
-
+	private User publisher; // 发布者
+	private DateTime publish_time; // 发布时间
 	private String title; // 标题
 	private String content; // 内容
 	private int praise_count; // 被赞次数
@@ -23,20 +19,22 @@ public class Funny{
 		this.id = id;
 	}
 
-	public long getPublisher_id() {
-		return publisher_id;
+	public long getPublisher() {
+		return publisher.getId();
 	}
 
-	public void setPublisher_id(long publisher_id) {
-		this.publisher_id = publisher_id;
+	public void setPublisher(User publisher) {
+		this.publisher = publisher;
 	}
 
-	public Date getPublishTime() {
-		return publishTime;
+	 
+
+	public DateTime getPublish_time() {
+		return publish_time;
 	}
 
-	public void setPublishTime(Date publishTime) {
-		this.publishTime = publishTime;
+	public void setPublish_time(DateTime publish_time) {
+		this.publish_time = publish_time;
 	}
 
 	public String getTitle() {
