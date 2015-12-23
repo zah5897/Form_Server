@@ -154,43 +154,4 @@ public class UserAPIController extends BaseController {
 		result.put("user", user);
 		return result;
 	}
-
-	// @RequestMapping("regist")
-	// public Map<String, Object> regist(@RequestParam MultipartFile file,
-	// HttpServletRequest request, User user) {
-	//
-	// // 手机号码不能为空
-	// if (TextUtils.isEmpty(user.getMobile())) {
-	// return HeaderUtil.getResultMap(ERROR.ERR_PARAM.setNewText("手机号码为空"));
-	// }
-	//
-	// // 判断是否已经注册
-	// User serverUser = userService.findUserByMobile(user.getMobile());
-	// if (serverUser != null) {
-	// return HeaderUtil.getResultMap(ERROR.ERR_USER_EXIST);
-	// }
-	// // 开始上传图片
-	// String shortPath = null;
-	// if (file != null && !file.isEmpty()) {
-	// try {
-	// shortPath = FileUtils.saveFileReturnShorePath(file,
-	// request.getServletContext());
-	// if (shortPath != null) {
-	// } else {
-	// return HeaderUtil.getResultMap(ERROR.ERR_FILE_UPLOAD);
-	// }
-	// } catch (Exception e) {
-	// e.printStackTrace();
-	// return HeaderUtil.getResultMap(ERROR.ERR_FILE_UPLOAD);
-	// }
-	// }
-	// if (shortPath != null) {
-	// user.setAvatar(shortPath);
-	// }
-	// long id = userService.insertUser(user);
-	// user.setId(id);
-	// Map<String, Object> result = HeaderUtil.getResultOKMap();
-	// result.put("user", user);
-	// return result;
-	// }
 }

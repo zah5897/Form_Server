@@ -29,9 +29,9 @@ public class UserDao extends BaseDao {
 
 	}
 
-	public void update(User user) {
-		jdbcTemplate.update("update t_user set nick_name=?,info=?,sex=?,avatar=? where id=?",
-				new Object[] { user.getNick_name(), user.getInfo(), user.getSex(), user.getAvatar(), user.getId() });
+	public int update(String nickName,String info,short sex,String avater,long id) {
+		return jdbcTemplate.update("update t_user set nick_name=?,info=?,sex=?,avatar=? where id=?",
+				new Object[] { nickName, info, sex,avater, id });
 	}
 
 	public List<?> getList() {
@@ -67,6 +67,11 @@ public class UserDao extends BaseDao {
 	public int getCountByName(String name) {
 		int count = jdbcTemplate.queryForObject("select count(*) from t_user user where user.name=?",
 				new String[] { name }, Integer.class);
+		return count;
+	}
+	public int getCountById(long id) {
+		int count = jdbcTemplate.queryForObject("select count(*) from t_user user where user.name=?",
+				new String[] { String.valueOf(id) }, Integer.class);
 		return count;
 	}
 
