@@ -6,6 +6,7 @@ import java.sql.SQLException;
 import org.springframework.jdbc.core.RowMapper;
 
 import com.haoqi.webapp.forly.bean.Funny;
+import com.haoqi.webapp.forly.util.PropertyMapperUtil;
 
 public class FunnyMapper implements RowMapper<Funny> {
 
@@ -14,7 +15,15 @@ public class FunnyMapper implements RowMapper<Funny> {
 		// user.setId(rs.getInt("id"));
 		// user.setUsername(rs.getString("username"));
 		// user.setPassword(rs.getString("password"));
-		return null;
+
+		Funny f = null;
+		try {
+			f = (Funny) PropertyMapperUtil.prase(Funny.class, rs);
+		} catch (Exception e) {
+			// TODO Auto-generated catch block
+			e.printStackTrace();
+		}
+		return f;
 	}
 
 }
