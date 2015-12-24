@@ -1,4 +1,4 @@
-package com.haoqi.webapp.forly.bean;
+package com.haoqi.webapp.forly.bean.property;
 
 import java.text.SimpleDateFormat;
 import java.util.Date;

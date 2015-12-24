@@ -26,9 +26,12 @@ public class FunnyDao extends BaseDao {
 	@SuppressWarnings({ "unchecked", "rawtypes" })
 	public List<Funny> list(long lastID, int pageSize) {
 		List<Funny> list = jdbcTemplate.query(
-				"select funny.*,user.name,user.info,user.avatar from t_funny funny "
-						+ "left join t_user user on funny.publisher=user.id  and "
-						+ "funny.id<? order by funny.id desc limit ?",
+				"select funny.*,user.name,user.info,user.avatar "
+				+ "from t_funny funny "
+				+ "left join t_user user "
+				+ "on funny.publisher=user.id  "
+				+ "and funny.id<? order by funny.id desc "
+				+ "limit ?",
 				new Object[] { lastID, pageSize }, new BeanPropertyRowMapper(Funny.class) {
 					@Override
 					protected void initBeanWrapper(BeanWrapper bw) {

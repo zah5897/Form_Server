@@ -21,9 +21,6 @@ public class BaseDao {
 		try {
 			String sql = " insert into " + tableName + " (";
 			Map<String, String> map = ObjectUtil.getProperty(obj);
-			if (map.containsKey("id")) {
-				map.remove("id");
-			}
 
 			String filedStr = "";
 			Set<String> set = map.keySet();

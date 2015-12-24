@@ -14,9 +14,9 @@ import org.json.JSONArray;
 import org.json.JSONObject;
 
 import com.haoqi.webapp.forly.bean.Category;
-import com.haoqi.webapp.forly.bean.DateTime;
 import com.haoqi.webapp.forly.bean.Funny;
 import com.haoqi.webapp.forly.bean.User;
+import com.haoqi.webapp.forly.bean.property.DateTime;
 import com.haoqi.webapp.forly.service.FunnyService;
 
 public class SpiderWork {

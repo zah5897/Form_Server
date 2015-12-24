@@ -1,28 +1,20 @@
 package com.haoqi.webapp.forly.controller.api;
 
-import java.io.File;
-import java.io.IOException;
-import java.text.SimpleDateFormat;
 import java.util.Iterator;
 import java.util.List;
 import java.util.Map;
-import java.util.UUID;
 
 import javax.annotation.Resource;
 import javax.servlet.http.HttpServletRequest;
 
 import org.apache.log4j.Logger;
 import org.springframework.web.bind.annotation.RequestMapping;
-import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.bind.annotation.RestController;
 import org.springframework.web.multipart.MultipartFile;
-import org.springframework.web.multipart.MultipartHttpServletRequest;
 import org.springframework.web.multipart.support.DefaultMultipartHttpServletRequest;
 
 import com.haoqi.webapp.forly.bean.User;
 import com.haoqi.webapp.forly.controller.BaseController;
-import com.haoqi.webapp.forly.dao.UserDao;
-import com.haoqi.webapp.forly.exception.AppException;
 import com.haoqi.webapp.forly.exception.ERROR;
 import com.haoqi.webapp.forly.service.UserService;
 import com.haoqi.webapp.forly.util.FileUtils;

@@ -5,6 +5,9 @@ import java.lang.reflect.Method;
 import java.util.HashMap;
 import java.util.Map;
 
+import com.haoqi.webapp.forly.annotation.Ignore;
+import com.haoqi.webapp.forly.annotation.IgoreType;
+
 /**
  * @说明 对象操纵高级方法
  * @author cuisuqiang
@@ -17,19 +20,27 @@ public class ObjectUtil {
 	 */
 	public static Map<String, String> getProperty(Object entityName) {
 		Map<String, String> map = new HashMap<String, String>();
-		try {
-			Class<? extends Object> c = entityName.getClass();
-			// 获得对象属性
-			Field field[] = c.getDeclaredFields();
-			for (Field f : field) {
-				Object v = invokeMethod(entityName, f.getName(), null);
-				if(v!=null){
-					map.put(f.getName(), v.toString());
-				} 
+		Class<? extends Object> c = entityName.getClass();
+		// 获得对象属性
+		Field field[] = c.getDeclaredFields();
+		for (Field f : field) {
+			f.setAccessible(true);
+			Ignore ignore = f.getAnnotation(Ignore.class);
+			if (ignore != null) {
+				if (ignore.TYPE() == IgoreType.Persistence) {
+					continue;
+				}
 			}
-		} catch (Exception e) {
-			map = null;
+			try {
+				Object v = invokeMethod(entityName, f.getName(), null);
+				if (v != null) {
+					map.put(f.getName(), v.toString());
+				}
+			} catch (Exception e) {
+				e.printStackTrace();
+			}
 		}
+
 		return map;
 	}
 
