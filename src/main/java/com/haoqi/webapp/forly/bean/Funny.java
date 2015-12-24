@@ -1,14 +1,14 @@
 package com.haoqi.webapp.forly.bean;
 
-import com.haoqi.webapp.forly.annotation.IgoreType;
-import com.haoqi.webapp.forly.annotation.Ignore;
+import com.haoqi.webapp.forly.annotation.ColumnType;
+import com.haoqi.webapp.forly.annotation.Type;
 import com.haoqi.webapp.forly.bean.property.DateTime;
 
 //@Table(name = "t_funny")
 public class Funny {
-	@Ignore()
+	@ColumnType
 	private long id;
-	@Ignore(TYPE = IgoreType.QUERY)
+	@ColumnType(Type.QUERY_OBJECT)
 	private User publisher; // 发布者
 	private DateTime publish_time; // 发布时间
 	private String title; // 标题

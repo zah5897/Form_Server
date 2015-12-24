@@ -5,8 +5,8 @@ import java.lang.reflect.Method;
 import java.util.HashMap;
 import java.util.Map;
 
-import com.haoqi.webapp.forly.annotation.Ignore;
-import com.haoqi.webapp.forly.annotation.IgoreType;
+import com.haoqi.webapp.forly.annotation.ColumnType;
+import com.haoqi.webapp.forly.annotation.Type;
 
 /**
  * @说明 对象操纵高级方法
@@ -25,9 +25,9 @@ public class ObjectUtil {
 		Field field[] = c.getDeclaredFields();
 		for (Field f : field) {
 			f.setAccessible(true);
-			Ignore ignore = f.getAnnotation(Ignore.class);
+			ColumnType ignore = f.getAnnotation(ColumnType.class);
 			if (ignore != null) {
-				if (ignore.TYPE() == IgoreType.Persistence) {
+				if (ignore.value() == Type.IGNORE_PERSISTENCE) {
 					continue;
 				}
 			}
