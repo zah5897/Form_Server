@@ -1,5 +1,7 @@
 package com.haoqi.webapp.forly.bean;
 
+import com.haoqi.webapp.forly.annotation.ColumnType;
+
 public class User {
 	public User() {
 	}
@@ -8,6 +10,7 @@ public class User {
 		this.id = id;
 	}
 
+	@ColumnType
 	private long id;
 	private String name;
 	private String password;
