@@ -21,7 +21,7 @@ public class UserDao extends BaseDao {
 		@SuppressWarnings("rawtypes")
 		List<User> list = jdbcTemplate.query("select *from t_user user where user.id=?", new Object[] { id },
 				new BeanPropertyRowMapper(User.class));
-		if (list != null) {
+		if (list != null && list.size() > 0) {
 			return list.get(0);
 		} else {
 			return null;
@@ -29,9 +29,9 @@ public class UserDao extends BaseDao {
 
 	}
 
-	public int update(String nickName,String info,short sex,String avater,long id) {
+	public int update(String nickName, String info, short sex, String avater, long id) {
 		return jdbcTemplate.update("update t_user set nick_name=?,info=?,sex=?,avatar=? where id=?",
-				new Object[] { nickName, info, sex,avater, id });
+				new Object[] { nickName, info, sex, avater, id });
 	}
 
 	public List<?> getList() {
@@ -44,7 +44,7 @@ public class UserDao extends BaseDao {
 		@SuppressWarnings("rawtypes")
 		List<User> list = jdbcTemplate.query("select *from t_user user where user.mobile=?", new Object[] { mobile },
 				new BeanPropertyRowMapper(User.class));
-		if (list != null) {
+		if (list != null && list.size() > 0) {
 			return list.get(0);
 		} else {
 			return null;
@@ -56,7 +56,7 @@ public class UserDao extends BaseDao {
 	public User findUserByName(String name) {
 		List<User> list = jdbcTemplate.query("select *from t_user user where user.name=?", new Object[] { name },
 				new BeanPropertyRowMapper(User.class));
-		if (list != null) {
+		if (list != null && list.size() > 0) {
 			return list.get(0);
 		} else {
 			return null;
@@ -69,6 +69,7 @@ public class UserDao extends BaseDao {
 				new String[] { name }, Integer.class);
 		return count;
 	}
+
 	public int getCountById(long id) {
 		int count = jdbcTemplate.queryForObject("select count(*) from t_user user where user.name=?",
 				new String[] { String.valueOf(id) }, Integer.class);

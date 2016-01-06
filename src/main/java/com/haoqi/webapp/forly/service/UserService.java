@@ -5,29 +5,26 @@ import java.util.List;
 import javax.annotation.Resource;
 
 import org.springframework.stereotype.Service;
-import org.springframework.transaction.annotation.Propagation;
 import org.springframework.transaction.annotation.Transactional;
 
 import com.haoqi.webapp.forly.bean.User;
 import com.haoqi.webapp.forly.dao.UserDao;
 
 @Service
-@Transactional(value = "txManager")
+@Transactional("transactionManager")
 public class UserService {
 	@Resource
 	private UserDao userDao;
-	
-	@Transactional(propagation = Propagation.NOT_SUPPORTED, readOnly = true)
+
 	public User getUser(long id) {
 		return userDao.getUser(id);
 	}
-	
-	@Transactional(propagation = Propagation.NOT_SUPPORTED, readOnly = true)
+
 	public User findUserByMobile(String mobile) {
 		return userDao.findUserByMobile(mobile);
 	}
-	
-	@Transactional(propagation = Propagation.NOT_SUPPORTED, readOnly = true)
+
+	@Transactional(readOnly = true)
 	public User findUserByName(String name) {
 		return userDao.findUserByName(name);
 	}
@@ -45,11 +42,10 @@ public class UserService {
 		return id;
 	}
 
-	@Transactional(propagation = Propagation.NOT_SUPPORTED, readOnly = true)
 	public List<?> getList() {
 		return userDao.getList();
 	}
-	@Transactional(propagation = Propagation.NOT_SUPPORTED, readOnly = true)
+
 	public int getUserCount(long id) {
 		return userDao.getCountById(id);
 	}

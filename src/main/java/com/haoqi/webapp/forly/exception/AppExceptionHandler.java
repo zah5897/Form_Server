@@ -30,6 +30,7 @@ public class AppExceptionHandler implements HandlerExceptionResolver {
 			json.put("errorMsg", err.getErrorMsg());
 			writer.write(json.toString());
 			writer.flush();
+			return null;
 		} catch (Exception e) {
 			e.printStackTrace();
 		}

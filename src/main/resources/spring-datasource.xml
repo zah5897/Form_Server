@@ -39,7 +39,7 @@
 	</bean>
 
 	<!-- 配置Hibernate事务管理器 -->
-	<bean id="txManager"
+	<bean id="transactionManager"
 		class="org.springframework.jdbc.datasource.DataSourceTransactionManager">
 		<property name="dataSource" ref="dataSource" />
 	</bean>
@@ -63,4 +63,5 @@
 		/> -->
 	<!-- Advisor定义，切入点和通知分别为txPointcut、txAdvice -->
 	<!-- <aop:advisor pointcut-ref="txPointcut" advice-ref="txAdvice" /> </aop:config> -->
+
 </beans>

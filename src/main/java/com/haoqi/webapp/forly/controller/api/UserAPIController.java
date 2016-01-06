@@ -56,8 +56,8 @@ public class UserAPIController extends BaseController {
 		return result;
 	}
 
-	@RequestMapping("login")
-	public Map<String, Object> login(String mail, String password) {
+	@RequestMapping("login_mail")
+	public Map<String, Object> loginByMail(String mail, String password) {
 		User user = userService.findUserByName(mail);
 		if (user == null) {
 			return HeaderUtil.getResultMap(ERROR.ERR_USER_NOT_EXIST);
