@@ -60,8 +60,7 @@ public class SpiderWork {
 
 					Funny f = new Funny();
 					f.setContent(content);
-					f.setTitle(content);
-					f.setPublisher(new User(2l));
+					f.setPublisher(new User(1));
 					f.setPublish_time(new DateTime(create_time * 1000));
 					f.setCategory_type(Category.FUNNY.getValue());
 					long id = funnyService.insert(f);

@@ -49,4 +49,8 @@ CREATE TABLE `t_user` (
   `lat` varchar(255) DEFAULT NULL,
   `lng` varchar(255) DEFAULT NULL,
   PRIMARY KEY (`id`)
-) ENGINE=InnoDB AUTO_INCREMENT=4 DEFAULT CHARSET=utf8;
+) ENGINE=InnoDB AUTO_INCREMENT=1 DEFAULT CHARSET=utf8;
+
+
+
+alter table table_name AUTO_INCREMENT=n    ##删除表之后，修改递增开始值
